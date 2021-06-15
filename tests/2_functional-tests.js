@@ -158,19 +158,40 @@ suite('Functional Tests', function() {
       });
       
     });
-    /*
+    
     suite('DELETE /api/books/[id] => delete book object id', function() {
 
       test('Test DELETE /api/books/[id] with valid id in db', function(done){
-        //done();
+        chai.request(server)
+          .post('/api/books')
+          .type('form')
+          .send({
+            title: 'delete book title'
+          })
+          .end(function(err, res){
+            bookid = res.body._id;
+            chai.request(server)
+              .delete('/api/books'+bookid)
+              .end(function(err, res){
+                assert.equal(res.status, 200);
+                assert.equal(res.body, 'delete successful');
+                done();
+              });
+          });
       });
 
       test('Test DELETE /api/books/[id] with  id not in db', function(done){
-        //done();
+        chai.request(server)
+              .delete('/api/books/60c9176fa994166548b9b159')
+              .end(function(err, res){
+                assert.equal(res.status, 404);
+                assert.equal(res.body, 'no book exists');
+                done();
+              });
       });
 
     });
-  */
+  
   });
   
 });
