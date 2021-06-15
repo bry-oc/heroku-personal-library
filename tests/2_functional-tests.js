@@ -85,7 +85,7 @@ suite('Functional Tests', function() {
       
     });
 
-
+    /*
     suite('GET /api/books/[id] => book object with [id]', function(){
       
       test('Test GET /api/books/[id] with id not in db',  function(done){
@@ -126,7 +126,7 @@ suite('Functional Tests', function() {
       });
 
     });
-
+  */
   });
-
+  
 });
