@@ -83,7 +83,16 @@ module.exports = function (app) {
         res.status(400);
         return res.json('missing required field comment');
       }
-      
+      Book.findOne({_id: bookid}, function(err, book){
+        if(err){
+          return console.error(err);
+        } else if(book) {
+          return res.json(book);
+        } else {
+          res.status(404);
+          return res.json('no book exists');
+        }
+      })
     })
     
     .delete(function(req, res){
