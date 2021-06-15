@@ -75,12 +75,12 @@ suite('Functional Tests', function() {
           .get('/api/books')
           .end(function(err, res){
             assert.equal(res.status, 200);
-            assert.isArray(res.body, 'An array of books should be returned')
-            assert.property(res.body[0], '_id', 'A book should have an id')
-            assert.property(res.body[0], 'title', 'A book should have a title')
-            assert.property(res.body[0], 'commentcount', 'A book should have a comment count')
-          })
-        //done();
+            assert.isArray(res.body, 'An array of books should be returned');
+            assert.property(res.body[0], '_id', 'A book should have an id');
+            assert.property(res.body[0], 'title', 'A book should have a title');
+            assert.property(res.body[0], 'commentcount', 'A book should have a comment count');
+            done();
+          });
       });      
       
     });
