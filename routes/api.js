@@ -17,8 +17,10 @@ module.exports = function (app) {
   const bookSchema = new mongoose.Schema({
     title: String,
     comments: [String],
-    commentcount: Number
+    commentcount: {type: Number, default: 0}
   });
+
+  const Book = mongoose.model('Book', bookSchema);
 
   app.route('/api/books')
     .get(function (req, res){
@@ -26,12 +28,19 @@ module.exports = function (app) {
       //json res format: [{"_id": bookid, "title": book_title, "commentcount": num_of_comments },...]
     })
     
-    .post(function (req, res){
+    .post(upload.none(), function (req, res){
       let title = req.body.title;
       if(!title){
         return res.json('missing required field title');
       } else {
-
+        const newBook = new Book({title: title});
+        newBook.save(function (err, book) {
+          if(err){
+            return console.error(err);
+          } else {
+            return res.json({_id: book._id, title: book.title});
+          }
+        })
       }
       //response will contain new book object including atleast _id and title
     })
