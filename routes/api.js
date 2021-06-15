@@ -75,7 +75,7 @@ module.exports = function (app) {
       })
     })
     
-    .post(function(req, res){
+    .post(upload.none(), function(req, res){
       let bookid = req.params.id;
       let comment = req.body.comment;
       //json res format same as .get
@@ -83,7 +83,7 @@ module.exports = function (app) {
         res.status(400);
         return res.json('missing required field comment');
       }
-      Book.findOne({_id: bookid}, function(err, book){
+      Book.findOneAndUpdate({_id: bookid}, {$inc: {commentcount: 1 }, $push: {comments: comment}}, {new: true} ,function(err, book){
         if(err){
           return console.error(err);
         } else if(book) {
@@ -98,6 +98,7 @@ module.exports = function (app) {
     .delete(function(req, res){
       let bookid = req.params.id;
       //if successful response will be 'delete successful'
+      Book.findByIdAndDelete
     });
   
 };
