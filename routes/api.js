@@ -62,6 +62,15 @@ module.exports = function (app) {
     .get(function (req, res){
       let bookid = req.params.id;
       //json res format: {"_id": bookid, "title": book_title, "comments": [comment,comment,...]}
+      Book.findOne({_id: bookid}, function(err, book){
+        if(err){
+          return console.error(err);
+        } else if (book) {
+          return res.json(book);
+        } else {
+          return res.json('no book exists')
+        }
+      })
     })
     
     .post(function(req, res){
