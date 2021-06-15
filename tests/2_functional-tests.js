@@ -18,7 +18,7 @@ suite('Functional Tests', function() {
   /*
   * ----[EXAMPLE TEST]----
   * Each test should completely test the response of the API end-point including response status code!
-  */
+  
   test('#example Test GET /api/books', function(done){
      chai.request(server)
       .get('/api/books')
@@ -31,7 +31,7 @@ suite('Functional Tests', function() {
         done();
       });
   });
-  /*
+  
   * ----[END of EXAMPLE TEST]----
   */
 
@@ -71,6 +71,15 @@ suite('Functional Tests', function() {
     suite('GET /api/books => array of books', function(){
       
       test('Test GET /api/books',  function(done){
+        chai.request(server)
+          .get('/api/books')
+          .end(function(err, res){
+            assert.equal(res.status, 200);
+            assert.isArray(res.body, 'An array of books should be returned')
+            assert.property(res.body[0], '_id', 'A book should have an id')
+            assert.property(res.body[0], 'title', 'A book should have a title')
+            assert.property(res.body[0], 'commentcount', 'A book should have a comment count')
+          })
         //done();
       });      
       

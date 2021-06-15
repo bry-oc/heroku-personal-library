@@ -29,6 +29,7 @@ module.exports = function (app) {
     })
     
     .post(upload.none(), function (req, res){
+      //response will contain new book object including atleast _id and title
       let title = req.body.title;
       if(!title){
         return res.json('missing required field title');
@@ -40,9 +41,8 @@ module.exports = function (app) {
           } else {
             return res.json({_id: book._id, title: book.title});
           }
-        })
+        });
       }
-      //response will contain new book object including atleast _id and title
     })
     
     .delete(function(req, res){
