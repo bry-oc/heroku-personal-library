@@ -39,6 +39,7 @@ module.exports = function (app) {
       //response will contain new book object including atleast _id and title
       let title = req.body.title;
       if(!title){
+        res.status(400);
         return res.json('missing required field title');
       } else {
         const newBook = new Book({title: title});
@@ -68,7 +69,8 @@ module.exports = function (app) {
         } else if (book) {
           return res.json(book);
         } else {
-          return res.json('no book exists')
+          res.status(404);
+          return res.json('no book exists');
         }
       })
     })
@@ -77,6 +79,11 @@ module.exports = function (app) {
       let bookid = req.params.id;
       let comment = req.body.comment;
       //json res format same as .get
+      if(!comment){
+        res.status(400);
+        return res.json('missing required field comment');
+      }
+      
     })
     
     .delete(function(req, res){

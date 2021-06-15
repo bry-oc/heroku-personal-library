@@ -59,7 +59,7 @@ suite('Functional Tests', function() {
         chai.request(server)
           .post('/api/books')
           .end(function(err, res){
-            assert.equal(res.status, 200);
+            assert.equal(res.status, 400);
             assert.equal(res.body, 'missing required field title', 'A string should be returned if no title is given');
             done();
           })
@@ -92,7 +92,7 @@ suite('Functional Tests', function() {
         chai.request(server)
           .get('/api/books/60c9176fa994166548b9b159')
           .end(function(err, res){
-            assert.equal(res.status, 200);
+            assert.equal(res.status, 404);
             assert.equal(res.body, 'no book exists');
             done();
           });
@@ -109,27 +109,56 @@ suite('Functional Tests', function() {
             assert.property(res.body, 'commentcount');
             done();
           });
-      });
-      
+      });      
     });
 
-    /*
+    
     suite('POST /api/books/[id] => add comment/expect book object with id', function(){
       
       test('Test POST /api/books/[id] with comment', function(done){
-        //done();
+        chai.request(server)
+          .post('/api/books/60c9176fa994160668b9b882')
+          .type('form')
+          .send({
+            comment: 'test comment'
+          })
+          .end(function(err, res){
+            assert.equal(res.status, 200);
+            assert.property(res.body, '_id');
+            assert.equal(res.body._id, '60c9176fa994160668b9b882');
+            assert.property(res.body, 'title');
+            assert.property(res.body, 'commentcount');
+            assert.isArray(res.body.comments);
+            done();
+          });
       });
 
       test('Test POST /api/books/[id] without comment field', function(done){
-        //done();
+        chai.request(server)
+          .post('/api/books/60c9176fa994160668b9b882')
+          .end(function(err, res){
+            assert.equal(res.status, 400);
+            assert.equal(res.body, 'missing required field comment');
+            done();
+          });
       });
 
       test('Test POST /api/books/[id] with comment, id not in db', function(done){
-        //done();
+        chai.request(server)
+          .post('/api/books/60c9176fa994166548b9b159')
+          .type('form')
+          .send({
+            comment: 'test comment'
+          })
+          .end(function(err, res){
+            assert.equal(res.status, 404);
+            assert.equal(res.body, 'no book exists');
+            done();
+          });
       });
       
     });
-
+    /*
     suite('DELETE /api/books/[id] => delete book object id', function() {
 
       test('Test DELETE /api/books/[id] with valid id in db', function(done){
