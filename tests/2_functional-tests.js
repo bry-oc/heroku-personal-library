@@ -85,20 +85,35 @@ suite('Functional Tests', function() {
       
     });
 
-    /*
+    
     suite('GET /api/books/[id] => book object with [id]', function(){
       
       test('Test GET /api/books/[id] with id not in db',  function(done){
-        //done();
+        chai.request(server)
+          .get('/api/books/60c9176fa994166548b9b159')
+          .end(function(err, res){
+            assert.equal(res.status, 200);
+            assert.equal(res.body, 'no book exists');
+            done();
+          });
       });
       
       test('Test GET /api/books/[id] with valid id in db',  function(done){
-        //done();
+        chai.request(server)
+          .get('/api/books/60c9176fa994160668b9b882')
+          .end(function(err, res){
+            assert.equal(res.status, 200);
+            assert.property(res.body, '_id');
+            assert.equal(res.body._id, '60c9176fa994160668b9b882');
+            assert.property(res.body, 'title');
+            assert.property(res.body, 'commentcount');
+            done();
+          });
       });
       
     });
 
-
+    /*
     suite('POST /api/books/[id] => add comment/expect book object with id', function(){
       
       test('Test POST /api/books/[id] with comment', function(done){
