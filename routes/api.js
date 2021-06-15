@@ -8,7 +8,17 @@
 
 'use strict';
 
+const mongoose = require('mongoose');
+const multer = require('multer');
+
 module.exports = function (app) {
+  const upload = multer();
+
+  const bookSchema = new mongoose.Schema({
+    title: String,
+    comments: [String],
+    commentcount: Number
+  });
 
   app.route('/api/books')
     .get(function (req, res){
@@ -18,6 +28,11 @@ module.exports = function (app) {
     
     .post(function (req, res){
       let title = req.body.title;
+      if(!title){
+        return res.json('missing required field title');
+      } else {
+
+      }
       //response will contain new book object including atleast _id and title
     })
     
