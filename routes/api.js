@@ -76,7 +76,7 @@ module.exports = function (app) {
         } else if (book) {
           return res.json(book);
         } else {
-          res.status(404);
+          //res.status(404);
           return res.json('no book exists');
         }
       })
@@ -87,7 +87,7 @@ module.exports = function (app) {
       let comment = req.body.comment;
       //json res format same as .get
       if(!comment){
-        res.status(400);
+        //res.status(400);
         return res.json('missing required field comment');
       }
       Book.findOneAndUpdate({_id: bookid}, {$inc: {commentcount: 1 }, $push: {comments: comment}}, {new: true} ,function(err, book){
@@ -96,7 +96,7 @@ module.exports = function (app) {
         } else if(book) {
           return res.json(book);
         } else {
-          res.status(404);
+          //res.status(404);
           return res.json('no book exists');
         }
       })
@@ -111,7 +111,7 @@ module.exports = function (app) {
         } else if(deleted){
           return res.json('delete successful');
         } else {
-          res.status(404);
+          //res.status(404);
           return res.json('no book exists');
         }
       })
