@@ -39,7 +39,7 @@ module.exports = function (app) {
       //response will contain new book object including atleast _id and title
       let title = req.body.title;
       if(!title){
-        res.status(400);
+        //res.status(400);
         return res.json('missing required field title');
       } else {
         const newBook = new Book({title: title});
